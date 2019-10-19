@@ -1,0 +1,19 @@
+service: <service-name>
+frameworkVersion: '>=1.1.0 <2.0.0'
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: <region>
+  stage: dev
+  profile: <profile-name>
+  timeout: 30
+functions:
+  app:
+    handler: app.server
+    events:
+      - http:
+          path: /
+          method: get
+      - http:
+          path: /{proxy+}
+          method: ANY
