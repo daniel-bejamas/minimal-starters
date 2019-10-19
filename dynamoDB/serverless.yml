@@ -1,0 +1,42 @@
+service: <service-name>
+frameworkVersion: '>=1.1.0 <2.0.0'
+provider:
+  name: aws
+  runtime: nodejs10.x
+  region: <region>
+  stage: dev
+  profile: <profile-name>
+  timeout: 30
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource: 'arn:aws:dynamodb:<region>:*:*'
+functions:
+  app:
+    handler: app.server
+    events:
+      - http:
+          path: /
+          method: get
+      - http:
+          path: /{proxy+}
+          method: ANY
+resources:
+  Resources:
+    tableName:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: tableName
+        AttributeDefinitions:
+          - AttributeName: ID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: ID
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
