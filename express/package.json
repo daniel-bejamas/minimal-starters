@@ -1,0 +1,19 @@
+{
+	"name": "service-name",
+	"version": "1.0.0",
+	"description": "Minimal express.js starter",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "set NODE_ENV=dev&& node app.js"
+	},
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/daniel-bejamas/starters.git"
+	},
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"express": "^4.17.1"
+	}
+}
