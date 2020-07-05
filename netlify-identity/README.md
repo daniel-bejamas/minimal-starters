@@ -1,0 +1,1 @@
+# Minimal Gatsby Starter
