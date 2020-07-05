@@ -1,4 +1,5 @@
 import React from "react"
+import { navigate } from "gatsby"
 
 import { useAuthContext } from "utils/useAuthContext"
 
@@ -14,12 +15,16 @@ export const RegisterForm = ({ inviteToken }) => {
     e.preventDefault()
     set_is_loading(true)
 
+    console.log({ auth, inviteToken })
+
     auth
-      .acceptInvite(inviteToken)
-      .then(() => {
-        window.location.href = "/"
+      .acceptInvite(inviteToken, password, true)
+      .then(result => {
+        console.log("register", { result })
+        navigate("/")
       })
-      .catch(() => {
+      .catch(error => {
+        console.log("register", { error })
         set_is_loading(false)
       })
   }
