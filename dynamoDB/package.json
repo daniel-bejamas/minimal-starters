@@ -1,11 +1,10 @@
 {
 	"name": "service-name",
 	"version": "1.0.0",
-	"description": "Minimal DynamoDB starter",
+	"description": "DynamoDB starter",
 	"main": "app.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "set NODE_ENV=dev&& node app.js",
+		"dev": "set NODE_ENV=dev && node app.js",
 		"deploy": "sls deploy --aws-profile profile-name"
 	},
 	"license": "ISC",

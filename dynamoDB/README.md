@@ -1,6 +1,4 @@
-# Server setup
-
-Uses serverless framework, aws service and cors
+# AWS DynamoDB Starter
 
 Workflow:
 
@@ -8,8 +6,8 @@ Workflow:
 2. Replace `service-name` and `profile-name` in package.json and serverless.yml,
 3. Replace `tableName` and `region` in serverless.yml
 4. `sls config credentials --provider aws --key <KEY> --secret <SECRET> --profile <profile-name>`
-5. Modify db.js, remember about `tableName` and `KEY`
-6. Update `iamRoleStatements` in serverless.yml if other permissions are needed
+5. Modify db.js, remember about `tableName` and `ID`
+6. Update `iamRoleStatements` in serverless.yml if other permissions are needed (e.g. deleting an item from the table)
 
 Development:
 `npm run dev`

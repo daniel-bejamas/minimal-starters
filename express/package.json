@@ -4,8 +4,7 @@
 	"description": "Minimal express.js starter",
 	"main": "app.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "set NODE_ENV=dev&& node app.js"
+		"dev": "set NODE_ENV=dev && node app.js"
 	},
 	"license": "ISC",
 	"repository": {
