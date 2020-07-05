@@ -8,6 +8,8 @@ export const RecoveryForm = ({ recoveryToken }) => {
   const [is_loading, set_is_loading] = React.useState()
   const [new_password, set_new_password] = React.useState("")
 
+  const update_new_password = e => set_new_password(e.target.value)
+
   const onSubmit = e => {
     e.preventDefault()
     set_is_loading(true)
@@ -29,7 +31,7 @@ export const RecoveryForm = ({ recoveryToken }) => {
         type="password"
         name="password"
         placeholder="new password"
-        handleChange={set_new_password}
+        handleChange={update_new_password}
       />
       <button type="submit" disabled={!new_password} isLoading={is_loading}>
         {is_loading ? "loading..." : "Submit"}

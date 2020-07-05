@@ -6,7 +6,9 @@ export const RegisterForm = ({ inviteToken }) => {
   const { auth } = useAuthContext()
 
   const [is_loading, set_is_loading] = React.useState()
-  const [new_password, set_new_password] = React.useState("")
+  const [password, set_password] = React.useState("")
+
+  const update_password = e => set_password(e.target.value)
 
   const onSubmit = e => {
     e.preventDefault()
@@ -29,9 +31,9 @@ export const RegisterForm = ({ inviteToken }) => {
         type="password"
         name="password"
         placeholder="new password"
-        handleChange={set_new_password}
+        handleChange={update_password}
       />
-      <button type="submit" disabled={!new_password} isLoading={is_loading}>
+      <button type="submit" disabled={!password} isLoading={is_loading}>
         {is_loading ? "loading..." : "Submit"}
       </button>
     </form>
