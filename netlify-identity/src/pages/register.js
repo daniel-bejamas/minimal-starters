@@ -14,7 +14,7 @@ const RegisterPage = props => {
   }, [])
 
   return (
-    <Layout pageTitle="Register" pageDescription="" {...props}>
+    <Layout hideIfLoggedIn pageTitle="Register" pageDescription="" {...props}>
       <RegisterForm inviteToken={invite_token} />
     </Layout>
   )

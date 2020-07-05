@@ -41,8 +41,8 @@ export const LoginForm = () => {
         placeholder="password"
         onChange={update_password}
       />
-      <button type="submit" disabled={!password || is_loading}>
-        {is_loading ? "loading..." : "Login"}
+      <button type="submit" disabled={!email || !password || is_loading}>
+        {is_loading ? "loading..." : "login"}
       </button>
     </form>
   )

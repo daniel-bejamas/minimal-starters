@@ -57,7 +57,7 @@ export const RecoveryForm = ({ recoveryToken }) => {
         onChange={update_password}
       />
       <button type="submit" disabled={!password || is_loading}>
-        {is_loading ? "loading..." : "Submit"}
+        {is_loading ? "loading..." : "submit"}
       </button>
     </form>
   )

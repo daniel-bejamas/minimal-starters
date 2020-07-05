@@ -14,7 +14,7 @@ const RecoveryPage = props => {
   }, [])
 
   return (
-    <Layout pageTitle="Recovery" pageDescription="" {...props}>
+    <Layout hideIfLoggedIn pageTitle="Recovery" pageDescription="" {...props}>
       <RecoveryForm recoveryToken={recovery_token} />
     </Layout>
   )

@@ -27,7 +27,7 @@ export const LogoutForm = () => {
   return (
     <form onSubmit={onSubmit}>
       <button type="submit" disabled={is_loading}>
-        {is_loading ? "loading..." : "Logout"}
+        {is_loading ? "loading..." : "logout"}
       </button>
     </form>
   )

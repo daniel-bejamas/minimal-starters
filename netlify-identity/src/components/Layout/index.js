@@ -7,8 +7,8 @@ import Footer from "components/Footer"
 
 import { AuthContextProvider } from "utils/useAuthContext"
 
-const Layout = ({ authRequired, children, ...seo }) => (
-  <AuthContextProvider authRequired={authRequired}>
+const Layout = ({ showIfLoggedIn, hideIfLoggedIn, children, ...seo }) => (
+  <AuthContextProvider {...{ showIfLoggedIn, hideIfLoggedIn }}>
     <SEO {...seo} />
     <Header />
     <Main>{children}</Main>
