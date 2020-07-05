@@ -4,3 +4,9 @@
   add email templates
     invitation: /email-templates/invitation.html
     recovery: /email-templates/recovery.html
+
+
+TODO:
+external providers
+Confirmation template
+Email change template
