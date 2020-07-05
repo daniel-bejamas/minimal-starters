@@ -4,12 +4,16 @@ import { navigate } from "gatsby"
 import { useAuthContext } from "utils/useAuthContext"
 
 export const RecoveryForm = ({ recoveryToken }) => {
-  const { auth, user } = useAuthContext()
+  const { auth } = useAuthContext()
 
   const [is_loading, set_is_loading] = React.useState()
   const [password, set_password] = React.useState("")
 
-  React.useEffect(() => {
+  const update_password = e => set_password(e.target.value)
+
+  const change_password = password => {
+    const user = auth.currentUser()
+
     console.log({ user })
 
     user &&
@@ -23,9 +27,7 @@ export const RecoveryForm = ({ recoveryToken }) => {
           console.log("password-change", { error })
           set_is_loading(false)
         })
-  }, [user])
-
-  const update_password = e => set_password(e.target.value)
+  }
 
   const onSubmit = e => {
     e.preventDefault()
@@ -37,6 +39,7 @@ export const RecoveryForm = ({ recoveryToken }) => {
       .recover(recoveryToken, true)
       .then(result => {
         console.log("password-recovery", { result })
+        change_password(password)
       })
       .catch(error => {
         console.log("password-recovery", { error })

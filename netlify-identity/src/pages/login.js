@@ -4,7 +4,7 @@ import Layout from "components/Layout"
 import { LoginForm } from "components/Form/login"
 
 const Login = props => (
-  <Layout pageTitle="Home" pageDescription="" {...props}>
+  <Layout pageTitle="Login" pageDescription="" {...props}>
     <LoginForm />
   </Layout>
 )

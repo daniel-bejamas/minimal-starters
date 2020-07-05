@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react"
 
-import Layout from 'components/Layout'
+import Layout from "components/Layout"
 
 const Home = props => (
-	<Layout authRequired pageTitle='Home' pageDescription='' {...props}>
-		home
-	</Layout>
+  <Layout authRequired pageTitle="Home" pageDescription="" {...props}>
+    home
+  </Layout>
 )
 
 export default Home

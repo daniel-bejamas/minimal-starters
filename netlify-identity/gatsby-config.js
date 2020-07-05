@@ -53,12 +53,5 @@ module.exports = {
 			}
 		},
 		`gatsby-plugin-netlify-cache`,
-		{
-			resolve: 'gatsby-plugin-csp',
-			options: {
-				disableOnDev: true,
-				directives: {}
-			}
-		}
 	]
 }
