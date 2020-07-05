@@ -1,3 +1,3 @@
-import React from 'react'
+import React from "react"
 
-export default () => <footer>footer</footer>
+export default () => <footer style={{ color: "lightgray" }}>(footer)</footer>
