@@ -1,3 +1,3 @@
-import React from 'react'
+import React from "react"
 
-export default () => <header>header</header>
+export const Header = () => <header>header</header>
