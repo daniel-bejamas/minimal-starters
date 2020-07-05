@@ -27,13 +27,13 @@ export const RegisterForm = ({ inviteToken }) => {
   return (
     <form onSubmit={onSubmit}>
       <input
-        isRequired
+        required
         type="password"
         name="password"
         placeholder="new password"
-        handleChange={update_password}
+        onChange={update_password}
       />
-      <button type="submit" disabled={!password} isLoading={is_loading}>
+      <button type="submit" disabled={!password}>
         {is_loading ? "loading..." : "Submit"}
       </button>
     </form>

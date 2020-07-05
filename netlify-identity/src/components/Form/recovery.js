@@ -27,13 +27,13 @@ export const RecoveryForm = ({ recoveryToken }) => {
   return (
     <form onSubmit={onSubmit}>
       <input
-        isRequired
+        required
         type="password"
         name="password"
         placeholder="new password"
-        handleChange={update_new_password}
+        onChange={update_new_password}
       />
-      <button type="submit" disabled={!new_password} isLoading={is_loading}>
+      <button type="submit" disabled={!new_password}>
         {is_loading ? "loading..." : "Submit"}
       </button>
     </form>
