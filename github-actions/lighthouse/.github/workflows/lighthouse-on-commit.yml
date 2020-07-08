@@ -1,0 +1,72 @@
+name: Lighthouse - deploy
+
+on:
+  pull_request:
+    branches:
+      - master
+
+env:
+  NETLIFY_PAGE_ID: gallant-noether-e9223d
+
+jobs:
+  lighthouse-check-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@master
+
+      - name: Get pages from PR comment
+        id: pages
+        run: |
+          PAGES=$(echo ${{ toJson(github.event.pull_request.body) }} | sed -e 's/.*\[START\]\(.*\)\[END\].*/\1/' | sed 's/\\r\\n/ /g' | xargs);
+          PAGES_ARRAY=($PAGES)
+          PAGES_ARRAY_WITH_PREFIX=("${PAGES_ARRAY[@]/#/https://deploy-preview-${{ github.event.pull_request.number }}--$NETLIFY_PAGE_ID.netlify.app}")
+          PAGES_ARRAY_DIVIDED_BY_COMMA=$(echo "${PAGES_ARRAY_WITH_PREFIX[@]}" | sed 's/ /,/g')
+          echo ::set-output name=pages::"${PAGES_ARRAY_DIVIDED_BY_COMMA[@]}"
+
+      - name: Print pages
+        run: |
+          echo Pages
+          echo ${{ toJson(steps.pages.outputs.pages) }}
+
+      - name: Create temp folder for LH results
+        run: |
+          mkdir /tmp/artifacts-deploy
+
+      - name: Build
+        run: |
+          npm install
+          npm build
+
+      - name: Waiting for 200 from the Netlify Preview
+        uses: jakepartusch/wait-for-netlify-action@v1
+        id: waitFor200
+        with:
+          site_name: ${{ env.NETLIFY_PAGE_ID }}
+
+      - name: Run Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        id: lighthouseDeployCheck
+        with:
+          accessToken: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
+          author: ${{ github.actor }}
+          branch: ${{ github.ref }}
+          outputDirectory: /tmp/artifacts-deploy
+          prCommentSaveOld: true
+          urls: ${{ steps.pages.outputs.pages }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: Lighthouse reports deploy
+          path: /tmp/artifacts-deploy
+
+      - name: Handle Lighthouse results
+        uses: foo-software/lighthouse-check-status-action@master
+        with:
+          lighthouseCheckResults: ${{ steps.lighthouseDeployCheck.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "90"
+          minBestPracticesScore: "80"
+          minPerformanceScore: "80"
+          minProgressiveWebAppScore: "80"
+          minSeoScore: "80"

@@ -1,0 +1,54 @@
+name: Lighthouse - master
+
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - opened
+      - edited
+
+env:
+  NETLIFY_PAGE_ID: gallant-noether-e9223d
+
+jobs:
+  lighthouse-check:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@master
+
+      - name: Get pages from PR comment
+        id: pages
+        run: |
+          PAGES=$(echo ${{ toJson(github.event.pull_request.body) }} | sed -e 's/.*\[START\]\(.*\)\[END\].*/\1/' | sed 's/\\r\\n/ /g' | xargs);
+          PAGES_ARRAY=($PAGES)
+          PAGES_ARRAY_WITH_PREFIX=("${PAGES_ARRAY[@]/#/https://$NETLIFY_PAGE_ID.netlify.app}")
+          PAGES_ARRAY_DIVIDED_BY_COMMA=$(echo "${PAGES_ARRAY_WITH_PREFIX[@]}" | sed 's/ /,/g')
+          echo ::set-output name=pages::"${PAGES_ARRAY_DIVIDED_BY_COMMA[@]}"
+
+      - name: Print pages
+        run: |
+          echo Pages
+          echo ${{ toJson(steps.pages.outputs.pages) }}
+
+      - name: Create temp folder for LH results
+        run: |
+          mkdir /tmp/artifacts-master
+
+      - name: Run LH
+        uses: foo-software/lighthouse-check-action@master
+        id: lighthouseMasterCheck
+        with:
+          accessToken: ${{ secrets.LIGHTHOUSE_CHECK_GITHUB_ACCESS_TOKEN }}
+          author: ${{ github.actor }}
+          branch: ${{ github.ref }}
+          outputDirectory: /tmp/artifacts-master
+          prCommentSaveOld: true
+          urls: ${{ steps.pages.outputs.pages }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: Lighthouse reports master
+          path: /tmp/artifacts-master
