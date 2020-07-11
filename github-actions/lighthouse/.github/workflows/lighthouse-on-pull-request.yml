@@ -9,7 +9,7 @@ on:
       - edited
 
 env:
-  NETLIFY_PAGE_ID: gallant-noether-e9223d # paste netlify page id here
+  NETLIFY_PAGE_ID: ${{ secrets.NETLIFY_PAGE_ID }}
 
 jobs:
   lighthouse-check:
