@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - master
+    types:
+      - opened
+      - edited
 
 env:
   NETLIFY_PAGE_ID: ${{ secrets.NETLIFY_PAGE_ID }}
