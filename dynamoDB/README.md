@@ -1,6 +1,6 @@
 # AWS DynamoDB Starter
 
-Workflow:
+## Setup
 
 1. Create IAM user - get `<KEY>` and `<SECRET>`
 2. Replace `service-name` and `profile-name` in package.json and serverless.yml,
@@ -9,10 +9,14 @@ Workflow:
 5. Modify db.js, remember about `tableName` and `ID`
 6. Update `iamRoleStatements` in serverless.yml if other permissions are needed (e.g. deleting an item from the table)
 
-Development:
+### Development
 `npm run dev`
 
-Deploy:
+### Deploy
 `npm run deploy`
 
-NOTE: aws sometimes doesn't like to create functions and resources at the same time - for the first time deploy it separately
+### NOTE
+AWS sometimes doesn't like to create functions and resources at the same time - for the first time deploy it separately
+
+### TODO
+1. DB CRUD functions
