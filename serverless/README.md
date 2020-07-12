@@ -1,15 +1,13 @@
-# Server setup
+# AWS Lambda Starter
 
-Uses serverless framework, aws service and cors
-
-Workflow:
+## Setup
 
 1. Create IAM user - get `<KEY>` and `<SECRET>`
-2. Replace `service-name` and `profile-name` in package.json and serverless.yml
-3. `sls config credentials --provider aws --key <KEY> --secret <SECRET> --profile <profile-name>`
+2. Replace `service-name` and `profile-name` in package.json and serverless.yml,
+4. `sls config credentials --provider aws --key <KEY> --secret <SECRET> --profile <profile-name>`
 
-Development:
+### Development
 `npm run dev`
 
-Deploy:
+### Deploy
 `npm run deploy`
