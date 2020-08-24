@@ -4,9 +4,12 @@ on:
   pull_request:
     branches:
       - master
+      - staging
+      - dev
     types:
       - opened
       - edited
+      - synchronize
 
 env:
   NETLIFY_PAGE_ID: ${{ secrets.NETLIFY_PAGE_ID }}
@@ -26,21 +29,17 @@ jobs:
           PAGES_ARRAY_WITH_PREFIX=("${PAGES_ARRAY[@]/#/https://deploy-preview-${{ github.event.pull_request.number }}--$NETLIFY_PAGE_ID.netlify.app}")
           PAGES_ARRAY_DIVIDED_BY_COMMA=$(echo "${PAGES_ARRAY_WITH_PREFIX[@]}" | sed 's/ /,/g')
           echo ::set-output name=pages::"${PAGES_ARRAY_DIVIDED_BY_COMMA[@]}"
-
       - name: Print pages
         run: |
           echo Pages
           echo ${{ toJson(steps.pages.outputs.pages) }}
-
       - name: Create temp folder for LH results
         run: |
           mkdir /tmp/artifacts-deploy
-
       - name: Build
         run: |
           npm install
           npm build
-
       - name: Waiting for 200 from the Netlify Preview
         uses: jakepartusch/wait-for-netlify-action@v1
         id: waitFor200
@@ -57,6 +56,7 @@ jobs:
           outputDirectory: /tmp/artifacts-deploy
           prCommentSaveOld: true
           urls: ${{ steps.pages.outputs.pages }}
+          emulatedFormFactor: "all"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@master

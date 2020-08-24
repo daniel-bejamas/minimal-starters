@@ -4,9 +4,10 @@ on:
   pull_request:
     branches:
       - master
+      - staging
+      - dev
     types:
       - opened
-      - edited
 
 env:
   NETLIFY_PAGE_ID: ${{ secrets.NETLIFY_PAGE_ID }}
@@ -26,16 +27,13 @@ jobs:
           PAGES_ARRAY_WITH_PREFIX=("${PAGES_ARRAY[@]/#/https://$NETLIFY_PAGE_ID.netlify.app}")
           PAGES_ARRAY_DIVIDED_BY_COMMA=$(echo "${PAGES_ARRAY_WITH_PREFIX[@]}" | sed 's/ /,/g')
           echo ::set-output name=pages::"${PAGES_ARRAY_DIVIDED_BY_COMMA[@]}"
-
       - name: Print pages
         run: |
           echo Pages
           echo ${{ toJson(steps.pages.outputs.pages) }}
-
       - name: Create temp folder for LH results
         run: |
           mkdir /tmp/artifacts-master
-
       - name: Run LH
         uses: foo-software/lighthouse-check-action@master
         id: lighthouseMasterCheck
@@ -46,6 +44,7 @@ jobs:
           outputDirectory: /tmp/artifacts-master
           prCommentSaveOld: true
           urls: ${{ steps.pages.outputs.pages }}
+          emulatedFormFactor: "all"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@master
